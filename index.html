@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Slavian Tattoo – zapisy</title>
+<meta name="description" content="Zapisz się na tatuaż w Slavian Tattoo: opisz pomysł, dodaj inspiracje i wybierz dni, które Ci pasują.">
+<meta name="theme-color" content="#191919">
+<meta property="og:title" content="Slavian Tattoo – zapisy">
+<meta property="og:description" content="Opisz swój pomysł i wybierz dni, które Ci pasują.">
+<meta property="og:image" content="og.png">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<script>
+/* Połączenie ze skryptem Google (zapis zgłoszeń, wolne dni) */
+var API_URL = "https://script.google.com/macros/s/AKfycbyVl_2uZcjKTxsz2GckUGBWofc3opJxRSopeMr9r47mv146N69qYXAcmZ6Ja0f7gFqTOg/exec";
+(function () {
+  function call(method, payload, ok, fail) {
+    var req = payload === undefined
+      ? fetch(API_URL + "?action=" + method, { redirect: "follow" })
+      : fetch(API_URL, { method: "POST", redirect: "follow", headers: { "Content-Type": "text/plain;charset=utf-8" }, body: JSON.stringify({ action: method, data: payload }) });
+    req.then(function (r) { return r.json(); })
+      .then(function (j) { if (j && j.error) throw new Error(j.error); ok && ok(j ? j.result : null); })
+      .catch(function (e) { fail && fail(e); });
+  }
+  window.google = { script: { get run() {
+    var s, f, o = {
+      withSuccessHandler: function (x) { s = x; return o; },
+      withFailureHandler: function (x) { f = x; return o; },
+      getStyles: function () { call("getStyles", undefined, s, f); },
+      getFreeDays: function () { call("getFreeDays", undefined, s, f); },
+      submitRequest: function (d) { call("submitRequest", d, s, f); }
+    };
+    return o;
+  } } };
+})();
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;800;900&family=Kanit:wght@300;400;500&display=swap">
+<style>
+:root{--ink:#191919;--smoke:#262626;--ash:#313131;--line:#3b3b3b;--bone:#EAEAEA;--dim:#9a978f;--gold:#F2CC2D;--gold-ink:#191919;--bad:#ff7b6b;--ok:#8fd18f;
+  --fd:"Poppins",system-ui,sans-serif;--fb:"Kanit",system-ui,sans-serif;color-scheme:dark}
+*{box-sizing:border-box}
+html{background:var(--ink)}
+body{margin:0;background:var(--ink);color:var(--bone);font:300 16px/1.5 var(--fb);
+  background-image:radial-gradient(900px 420px at 80% -10%,rgba(242,204,45,.08),transparent 60%);background-repeat:no-repeat;min-height:100vh;
+  padding:24px max(18px,env(safe-area-inset-right)) 40px max(18px,env(safe-area-inset-left))}
+.wrap{max-width:620px;margin:0 auto;display:flex;flex-direction:column;gap:30px}
+header{display:flex;flex-direction:column;align-items:center;gap:16px;text-align:center;padding-top:8px}
+.logo{height:78px;width:auto;color:var(--bone)}
+h1{margin:0;font:800 clamp(28px,7vw,40px)/1.05 var(--fd);letter-spacing:-.02em;text-wrap:balance}
+h1 u{text-decoration:none;color:var(--gold)}
+.lead{margin:0;color:var(--dim);max-width:46ch}
+section{display:flex;flex-direction:column;gap:16px}
+h2{margin:0;display:flex;align-items:baseline;gap:10px;font:800 21px var(--fd)}
+h2 em{font-style:normal;font:600 12px var(--fd);color:var(--gold);letter-spacing:.12em}
+.field{display:flex;flex-direction:column;gap:7px}
+.field>span{font:600 11px var(--fd);text-transform:uppercase;letter-spacing:.12em;color:var(--dim)}
+.field>span small{text-transform:none;letter-spacing:0;font:300 12px var(--fb)}
+.field>span b{color:var(--gold)}
+.inp{font:400 17px var(--fb);color:var(--bone);background:var(--smoke);border:1px solid transparent;border-radius:12px;padding:13px 14px;width:100%}
+.inp::placeholder{color:#6d6b66}
+.inp:focus{outline:none;border-color:var(--gold);background:var(--ash)}
+textarea.inp{min-height:130px;resize:vertical;line-height:1.45}
+.at{position:relative}.at::before{content:"@";position:absolute;left:14px;top:50%;transform:translateY(-52%);font:800 18px var(--fd);color:var(--gold)}
+.at .inp{padding-left:34px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:520px){.two{grid-template-columns:1fr}}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{all:unset;cursor:pointer;padding:9px 14px;border-radius:999px;background:var(--smoke);font-size:14px;border:1px solid transparent}
+.chip:focus-visible{border-color:var(--gold)}
+.chip[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink);font-weight:500}
+.cal{display:flex;flex-direction:column;gap:14px}
+.mhead{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.mtitle{text-align:center;font:800 18px var(--fd);text-transform:capitalize;display:flex;flex-direction:column;line-height:1.2}
+.mtitle small{font:400 12px var(--fb);text-transform:none;color:var(--dim)}
+.mnav{all:unset;cursor:pointer;width:44px;height:44px;border-radius:12px;background:var(--smoke);display:grid;place-items:center;font:600 26px/1 var(--fd);color:var(--gold)}
+.mnav:disabled{opacity:.25;cursor:default}
+.mnav:focus-visible{outline:2px solid var(--gold)}
+.picked{display:flex;flex-wrap:wrap;gap:6px}
+.pk{display:inline-flex;align-items:center;gap:6px;padding:5px 6px 5px 11px;border-radius:999px;background:var(--gold);color:var(--gold-ink);font:500 13px var(--fb)}
+.pk button{all:unset;cursor:pointer;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:rgba(25,25,25,.15);font-weight:600}
+.days{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.wd{font:600 10px var(--fd);text-transform:uppercase;letter-spacing:.08em;color:#6d6b66;text-align:center}
+.day{all:unset;cursor:pointer;aspect-ratio:1;border-radius:12px;background:var(--smoke);display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.05;font:600 15px var(--fd);border:1px solid transparent}
+.day:focus-visible{border-color:var(--gold)}
+.day small{font:500 9px var(--fb);text-transform:uppercase;letter-spacing:.06em;opacity:.8}
+.day.off{background:transparent;color:#4a4a4a;cursor:default;font-weight:400}
+.day[aria-pressed="true"]{background:var(--gold);color:var(--gold-ink)}
+.check{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--dim);cursor:pointer}
+.check input{width:22px;height:22px;accent-color:var(--gold);flex:none;margin:1px 0 0}
+.note{font-size:13px;color:var(--dim)}
+.loading{color:var(--dim);font-size:14px;padding:14px;border:1px dashed var(--line);border-radius:12px;text-align:center}
+.btn{all:unset;cursor:pointer;text-align:center;padding:17px 22px;border-radius:14px;font:800 16px var(--fd);background:var(--gold);color:var(--gold-ink)}
+.btn:focus-visible{outline:2px solid var(--bone);outline-offset:3px}
+.btn[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
+.err{color:var(--bad);font-size:14px;margin:0}
+.photos{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:8px}
+.ph{position:relative;aspect-ratio:1;border-radius:12px;overflow:hidden;background:var(--smoke)}
+.ph img{width:100%;height:100%;object-fit:cover;display:block}
+.ph button{all:unset;cursor:pointer;position:absolute;top:5px;right:5px;width:26px;height:26px;border-radius:50%;background:rgba(25,25,25,.85);color:var(--bone);display:grid;place-items:center;font:600 15px var(--fd)}
+.ph.busy{display:grid;place-items:center;color:var(--dim);font-size:12px}
+.add{all:unset;cursor:pointer;aspect-ratio:1;border-radius:12px;border:1px dashed var(--line);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;color:var(--dim);font-size:12px;text-align:center}
+.add b{font:800 26px/1 var(--fd);color:var(--gold)}
+.add:focus-visible{border-color:var(--gold)}
+.counter{font:600 12px var(--fd);color:var(--gold)}
+.hp{position:absolute;left:-5000px;width:1px;height:1px;overflow:hidden}
+.done{display:none;flex-direction:column;align-items:center;gap:14px;text-align:center;padding:30px 0}
+.done .mark{width:72px;height:72px;border-radius:50%;background:var(--gold);color:var(--gold-ink);display:grid;place-items:center;font:900 34px var(--fd)}
+.done h2{font-size:28px}
+.done p{margin:0;color:var(--dim);max-width:40ch}
+footer{text-align:center;font-size:12px;color:#6d6b66}
+</style>
+</head>
+<body>
+<div class="wrap" id="app">
+  <header>
+    <svg class="logo" viewBox="150 348 782 386" role="img" aria-label="Slavian Tattoo Artist"><path fill="currentColor" d="M 382.6 643.9 C 359.4 658.4 295.8 696 284.6 722.1 C 292.4 655.1 194.4 592.6 162.6 658.4 C 169.2 579.4 291.6 592.6 315.2 679.1 C 376.4 629.4 334.6 599.3 313.5 612.1 C 317.3 603.4 325.1 597.2 334.2 595.5 C 319.3 580.6 279.2 558.7 257.7 555.4 C 225 550 209.3 570.3 218.4 590.2 C 196.9 576.1 205.6 540.9 232.9 531.8 C 184.5 493.4 195.7 455.8 202.3 448.7 C 202.3 530.6 361.9 535.6 375.2 620.3 C 377.2 634.4 376 643.9 382.6 643.9 M 383 626.1 C 385.9 529.8 182.5 514.1 209.3 434.3 C 189.9 436.7 170.5 435.1 154.3 428.1 C 201.5 431.8 268.5 397.5 287.1 352.4 C 299.5 409.4 365.2 444.6 392.9 401.2 C 381.8 440 341.2 497.9 294.5 480.2 C 313.1 481 328.8 474.4 338.4 445.4 C 316.8 446.2 292.9 436.7 270.5 414.8 C 257.3 422.3 240.3 428.9 222.6 432.2 C 213.5 495.5 438.8 527.7 383 626.1 M 436.5 566.8 C 436.5 581.3 435.6 609.4 445.6 614.8 C 433.6 621 417.9 638.8 427.4 665.2 C 416.2 655.3 411.7 627.6 411.7 596.6 L 411.7 470.9 C 411.7 455.2 410.8 412.2 398.8 401.4 C 404.6 400.6 412.9 410.1 419.1 423.7 C 427 394 452.6 365 486.1 379.1 C 458 378.3 440.6 406 436.5 445.2 Z M 436.5 566.8 M 512.5 570.5 C 505.9 566.8 498.9 561.4 492.3 555.2 C 486.5 556.5 484.4 562.3 484.4 575.5 L 484.4 605.7 C 486.5 607.3 488.6 609.4 490.6 611.9 C 497.2 605.7 504.7 601.1 512.5 597.4 Z M 512.5 516.8 C 501.8 518.4 491.5 516.4 483.2 508.9 C 488.1 529.6 499.7 550.7 512.5 563.1 Z M 538.6 598.2 C 539.8 606.1 541.9 612.7 546.5 614.8 C 534.5 621 518.8 638.8 528.3 665.2 C 519.6 657.4 514.6 638.4 513 615.2 C 496.8 630.1 490.2 642.9 484.8 664 C 484 658.2 482.8 651.6 481.5 645.8 C 475.7 623.5 463.3 606.1 444.7 611.5 C 448.5 606.5 453.8 603.2 459.6 601.6 L 459.6 567.7 C 459.6 552.4 469.5 546.1 488.1 551.1 C 474.9 536.6 463.8 517.2 462.1 499.4 C 476.6 510.6 492.3 481.2 494.4 467.6 C 498.5 481.6 522.5 501.9 551.4 491.6 C 548.1 497.4 543.1 502.7 537.4 506.9 L 537.4 566.8 C 537.4 573 537 582.1 537.8 590.8 C 546 590.4 552.7 592.5 556.8 597 C 551.8 594.9 545.6 595.8 538.6 598.2 M 567.6 511.4 C 564.7 508.5 561.8 504.8 558.9 500.2 C 565.5 494.1 577.9 484.1 580 470.5 C 582.4 485.4 588.6 498.2 610.6 492.8 C 604.8 501.9 599 509.8 592.4 513.9 L 592.4 599.9 C 599.4 601.6 605.6 604.9 610.1 610.2 C 613.5 606.1 616.8 602.4 620.5 599.9 L 620.5 511.4 C 617.6 508.5 614.7 504.8 611.8 500.2 C 618.4 494.1 630.8 484.1 633.3 470.5 C 635.4 485.4 641.6 498.2 663.5 492.8 C 657.7 501.9 651.9 509.8 645.3 513.9 L 645.3 591.6 C 647.4 591.6 649.4 591.6 651.9 592.1 C 625.9 603.6 611.4 639.6 604.8 665.2 C 601.5 635.1 589.5 603.2 552.7 611.5 C 556 606.9 561.3 603.2 567.6 601.1 Z M 567.6 511.4 M 697.8 397.7 C 722.2 424.6 700.3 468 672.6 470.5 C 682.9 461 688.7 441.1 676.3 434.1 C 694.5 430.4 695.8 406.8 697.8 397.7 M 692.4 665.2 C 681.3 655.3 676.3 627.6 676.3 596.6 L 676.3 511.4 C 673.4 508.5 670.5 504.8 667.6 499.8 C 674.7 494 686.7 484.1 689.1 470.5 C 691.2 485.4 697.4 498.2 719.3 492.4 C 713.5 501.9 707.7 509.8 701.1 513.9 L 701.1 566.8 C 701.1 581.3 700.3 609.4 710.2 614.8 C 698.6 621 682.5 638.8 692.4 665.2 M 783 570.5 C 776.4 566.8 769.4 561.4 762.7 555.2 C 756.9 556.5 754.9 562.3 754.9 575.5 L 754.9 605.7 C 756.9 607.3 759 609.4 761.1 611.9 C 767.7 605.7 775.1 601.1 783 597.4 Z M 783 516.8 C 772.2 518.4 761.9 516.4 753.6 508.9 C 758.6 529.6 770.2 550.7 783 563.1 Z M 809.1 598.2 C 810.3 606.1 812.4 612.7 816.9 614.8 C 804.9 621 789.2 638.8 798.7 665.2 C 790 657.4 785.1 638.4 783.4 615.2 C 767.3 630.1 760.7 642.9 755.3 664 C 754.5 658.2 753.2 651.6 752 645.8 C 746.2 623.5 733.8 606.1 715.2 611.5 C 718.9 606.5 724.3 603.2 730.1 601.6 L 730.1 567.7 C 730.1 552.4 740 546.1 758.6 551.1 C 745.4 536.6 734.2 517.2 732.6 499.4 C 747 510.6 762.7 481.2 764.8 467.6 C 768.9 481.6 792.9 501.9 821.9 491.6 C 818.6 497.4 813.6 502.7 807.8 506.9 L 807.8 566.8 C 807.8 573 807.4 582.1 808.2 590.8 C 816.5 590.4 823.1 592.5 827.3 597 C 822.3 594.9 816.1 595.8 809.1 598.2 M 915.7 611.1 C 918.6 611.9 922 612.7 925.7 614.8 C 914.1 616.9 907.1 644.6 906.6 658.2 C 906.6 668.6 910 677.7 919.9 681.4 C 889.7 678.1 890.9 644.6 890.9 591.2 L 890.9 563.1 C 890.9 518.4 889.3 509.8 881.4 504 C 876.5 508.1 869.8 510.6 862.8 511.4 L 862.8 566.8 C 862.8 581.3 862 609.4 871.9 614.8 C 859.9 621 844.2 638.8 853.7 665.2 C 843 655.3 838 627.6 838 596.6 L 838 508.5 L 839.2 508.5 C 833 506 827.3 502.3 823.1 497.8 C 844.6 506 870.7 498.6 883.1 469.2 C 909.1 480.8 914.9 499 915.3 543.7 C 915.7 543.7 915.7 606.5 915.7 611.1 M 409.7 727.2 L 409.7 705.1 L 401.6 705.1 L 401.6 701.7 L 422.1 701.7 L 422.1 705.1 L 414 705.1 L 414 727.2 Z M 409.7 727.2 M 429.2 717.3 L 438 717.3 L 433.6 705.7 Z M 421.5 727.2 L 431.2 701.7 L 436 701.7 L 445.7 727.2 L 441.3 727.2 L 438.7 720.7 L 428.5 720.7 L 425.9 727.2 Z M 421.5 727.2 M 453.2 727.2 L 453.2 705.1 L 445 705.1 L 445 701.7 L 465.6 701.7 L 465.6 705.1 L 457.5 705.1 L 457.5 727.2 Z M 453.2 727.2 M 475.7 727.2 L 475.7 705.1 L 467.5 705.1 L 467.5 701.7 L 488.1 701.7 L 488.1 705.1 L 480 705.1 L 480 727.2 Z M 475.7 727.2 M 502.4 724 C 505.1 724 507.1 723.3 508.3 721.8 C 509.6 720.3 510.2 717.9 510.2 714.6 C 510.2 711 509.6 708.6 508.3 707.1 C 507.1 705.7 505.1 705 502.4 705 C 499.8 705 497.8 705.7 496.6 707.1 C 495.3 708.6 494.7 711 494.7 714.6 C 494.7 717.9 495.3 720.3 496.6 721.8 C 497.8 723.3 499.8 724 502.4 724 M 502.4 727.6 C 498.4 727.6 495.4 726.6 493.4 724.4 C 491.4 722.3 490.4 719 490.4 714.6 C 490.4 709.9 491.4 706.6 493.4 704.5 C 495.4 702.4 498.4 701.3 502.4 701.3 C 506.5 701.3 509.5 702.4 511.5 704.5 C 513.5 706.6 514.5 709.9 514.5 714.6 C 514.5 719 513.5 722.3 511.5 724.4 C 509.5 726.6 506.5 727.6 502.4 727.6 M 530 724 C 532.6 724 534.6 723.3 535.9 721.8 C 537.1 720.3 537.7 717.9 537.7 714.6 C 537.7 711 537.1 708.6 535.9 707.1 C 534.6 705.7 532.6 705 530 705 C 527.3 705 525.4 705.7 524.1 707.1 C 522.9 708.6 522.3 711 522.3 714.6 C 522.3 717.9 522.9 720.3 524.1 721.8 C 525.4 723.3 527.3 724 530 724 M 530 727.6 C 525.9 727.6 522.9 726.6 520.9 724.4 C 518.9 722.3 517.9 719 517.9 714.6 C 517.9 709.9 518.9 706.6 520.9 704.5 C 522.9 702.4 525.9 701.3 530 701.3 C 534 701.3 537.1 702.4 539.1 704.5 C 541.1 706.6 542.1 709.9 542.1 714.6 C 542.1 719 541.1 722.3 539.1 724.4 C 537.1 726.6 534 727.6 530 727.6 M 562.3 717.3 L 571.2 717.3 L 566.7 705.7 Z M 554.6 727.2 L 564.3 701.7 L 569.2 701.7 L 578.8 727.2 L 574.4 727.2 L 571.9 720.7 L 561.6 720.7 L 559.1 727.2 Z M 554.6 727.2 M 587.4 714.7 L 593.6 714.7 C 595.2 714.7 596.4 714.3 597.3 713.6 C 598.2 712.8 598.7 711.6 598.7 709.9 C 598.7 706.7 597.1 705.1 594 705.1 L 587.4 705.1 Z M 583.1 727.2 L 583.1 701.7 L 594.8 701.7 C 597.6 701.7 599.7 702.5 601 703.9 C 602.3 705.4 603 707.4 603 709.9 C 603 711.7 602.5 713.2 601.6 714.5 C 600.7 715.8 599.4 716.6 597.8 717.1 C 598.2 717.5 598.6 717.8 598.9 718.2 C 599.1 718.6 599.4 719.2 599.7 719.8 L 602.9 727.2 L 598.4 727.2 L 595.3 720.1 C 595 719.4 594.7 718.9 594.2 718.6 C 593.8 718.4 593.1 718.2 592.2 718.2 L 587.4 718.2 L 587.4 727.2 Z M 583.1 727.2 M 613.8 727.2 L 613.8 705.1 L 605.7 705.1 L 605.7 701.7 L 626.3 701.7 L 626.3 705.1 L 618.1 705.1 L 618.1 727.2 Z M 613.8 727.2 M 629.7 701.7 L 634 701.7 L 634 727.2 L 629.7 727.2 Z M 629.7 701.7 M 646.7 727.6 C 643.4 727.6 640.8 727.2 638.8 726.4 L 638.8 722.6 C 639.9 723 641.1 723.3 642.4 723.6 C 643.7 723.9 645 724 646.3 724 C 648.4 724 649.9 723.8 650.9 723.3 C 651.9 722.8 652.4 721.8 652.4 720.4 C 652.4 719.6 652.2 718.9 651.8 718.3 C 651.4 717.8 650.7 717.3 649.7 717 C 648.7 716.6 647.4 716.2 645.7 715.8 C 642.9 715 641 714.1 639.9 713 C 638.8 711.9 638.2 710.4 638.2 708.5 C 638.2 706.3 639 704.5 640.7 703.2 C 642.3 702 644.7 701.3 648 701.3 C 649.5 701.3 650.9 701.4 652.2 701.7 C 653.5 701.9 654.5 702.1 655.2 702.4 L 655.2 706.2 C 653.2 705.4 651 705 648.6 705 C 646.7 705 645.2 705.3 644.2 705.8 C 643.1 706.3 642.6 707.2 642.6 708.5 C 642.6 709.3 642.8 709.9 643.1 710.4 C 643.5 710.8 644.1 711.2 645 711.6 C 646 711.9 647.2 712.3 648.8 712.7 C 650.9 713.3 652.5 713.9 653.7 714.6 C 654.8 715.3 655.6 716.2 656.1 717.2 C 656.5 718.1 656.8 719.2 656.8 720.4 C 656.8 722.7 655.9 724.4 654.3 725.7 C 652.6 727 650.1 727.6 646.7 727.6 M 666 727.2 L 666 705.1 L 657.9 705.1 L 657.9 701.7 L 678.4 701.7 L 678.4 705.1 L 670.3 705.1 L 670.3 727.2 Z M 666 727.2 "/></svg>
+    <h1>Zapisz się na <u>tatuaż</u></h1>
+    <p class="lead">Opisz swój pomysł i zaznacz dni, które Ci pasują. Odezwę się z wyceną i propozycją terminu.</p>
+  </header>
+
+  <form id="f" novalidate>
+    <div class="wrap" style="gap:34px">
+    <section>
+      <h2><em>01</em>O Tobie</h2>
+      <div class="two">
+        <label class="field"><span>Instagram <b>*</b></span><div class="at"><input class="inp" name="ig" id="ig" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="twoja.nazwa" required></div></label>
+        <label class="field"><span>Imię <b>*</b></span><input class="inp" name="imie" id="imie" autocomplete="given-name" required></label>
+      </div>
+      <div class="two">
+        <label class="field"><span>Telefon <b>*</b></span><input class="inp" name="tel" id="tel" type="tel" inputmode="tel" autocomplete="tel" placeholder="600 000 000" required></label>
+        <label class="field"><span>E-mail <small>opcjonalnie</small></span><input class="inp" name="email" id="email" type="email" inputmode="email" autocomplete="email" autocapitalize="off" spellcheck="false" placeholder="ty@przyklad.pl"></label>
+      </div>
+    </section>
+
+    <section>
+      <h2><em>02</em>Twój pomysł</h2>
+      <label class="field"><span>Opisz, co chcesz wytatuować <b>*</b></span><textarea class="inp" name="pomysl" id="pomysl" placeholder="np. gałązka oliwna z drobnym napisem, delikatna, bez cieniowania…" required></textarea></label>
+      <div class="field"><span>Styl <small>jeśli wiesz</small></span><div class="chips" id="styles"></div></div>
+      <div class="two">
+        <label class="field"><span>Miejsce na ciele</span><input class="inp" name="miejsce" id="miejsce" placeholder="np. przedramię"></label>
+        <div class="field"><span>Przybliżony rozmiar</span><div class="chips" id="sizes"></div></div>
+      </div>
+      <label class="field"><span>Inspiracje <small>link do posta, Pinteresta itp.</small></span><input class="inp" name="linki" id="linki" placeholder="https://…"></label>
+      <div class="field"><span>Zdjęcia / screeny <small>do 5, np. inspiracje albo miejsce na ciele</small></span>
+        <div class="photos" id="photos"></div>
+        <input type="file" id="file" accept="image/*" multiple hidden>
+      </div>
+    </section>
+
+    <section>
+      <h2><em>03</em>Kiedy Ci pasuje?</h2>
+      <p class="note" style="margin-top:-8px">Przewijaj miesiące strzałkami i zaznacz dni, które Ci pasują (do 5). Jasne dni są wolne. <span class="counter" id="cnt"></span></p>
+      <div class="cal" id="cal"><div class="loading">Sprawdzam wolne terminy…</div></div>
+      <div class="picked" id="picked"></div>
+      <label class="check"><input type="checkbox" id="elast"> Jestem elastyczny/a, pasuje mi większość terminów</label>
+    </section>
+
+    <section>
+      <label class="check"><input type="checkbox" id="zgoda"> <span>Zgadzam się na przetwarzanie moich danych (imię, Instagram, telefon, e-mail, opis pomysłu) przez Slavian Tattoo w celu kontaktu i umówienia wizyty. <b style="color:var(--gold)">*</b></span></label>
+      <div class="hp" aria-hidden="true"><input name="website" id="website" tabindex="-1" autocomplete="off"></div>
+      <p class="err" id="err" hidden></p>
+      <button class="btn" type="submit" id="send">Wyślij zgłoszenie</button>
+    </section>
+    </div>
+  </form>
+
+  <div class="done" id="done">
+    <div class="mark">✓</div>
+    <h2>Dzięki, <span id="dn"></span>!</h2>
+    <p>Twoje zgłoszenie dotarło. Odezwę się na Instagramie albo telefonicznie z wyceną i propozycją terminu.</p>
+  </div>
+  <footer>Slavian Tattoo Artist</footer>
+</div>
+
+<script>
+var t0=Date.now(),styl="",rozmiar="",picked=[];
+var SIZES=["do 5 cm","5–10 cm","10–20 cm","większy"];
+var $=function(s){return document.querySelector(s)};
+function chipRow(el,items,get,set){el.innerHTML="";items.forEach(function(it){var b=document.createElement("button");b.type="button";b.className="chip";b.textContent=it;b.setAttribute("aria-pressed",get()===it);
+  b.onclick=function(){set(get()===it?"":it);chipRow(el,items,get,set)};el.appendChild(b)})}
+chipRow($("#sizes"),SIZES,function(){return rozmiar},function(v){rozmiar=v});
+google.script.run.withSuccessHandler(function(st){chipRow($("#styles"),st,function(){return styl},function(v){styl=v})}).getStyles();
+google.script.run.withSuccessHandler(renderCal).withFailureHandler(function(){$("#cal").innerHTML='<div class="loading">Nie udało się wczytać kalendarza. Zaznacz „elastyczny/a” albo opisz w pomyśle, kiedy Ci pasuje.</div>'}).getFreeDays();
+function iso(d){return d.getFullYear()+"-"+("0"+(d.getMonth()+1)).slice(-2)+"-"+("0"+d.getDate()).slice(-2)}
+var FREE={},LASTFREE=null,VM=null;
+function renderCal(free){FREE={};free.forEach(function(d){FREE[d]=1});LASTFREE=free.length?free[free.length-1]:null;
+  if(!free.length){$("#cal").innerHTML='<div class="loading">Najbliższe miesiące są zajęte. Zaznacz „elastyczny/a”, a zaproponuję pierwszy wolny termin.</div>';return}
+  var f=new Date(free[0]+"T12:00:00");VM=new Date(f.getFullYear(),f.getMonth(),1,12);drawMonth()}
+function drawMonth(){var c=$("#cal");c.innerHTML="";var now=new Date(),minM=new Date(now.getFullYear(),now.getMonth(),1,12),lf=new Date(LASTFREE+"T12:00:00"),maxM=new Date(lf.getFullYear(),lf.getMonth(),1,12);
+  var head=document.createElement("div");head.className="mhead";
+  var prev=document.createElement("button");prev.type="button";prev.className="mnav";prev.innerHTML="&#8249;";prev.setAttribute("aria-label","Poprzedni miesiąc");prev.disabled=VM<=minM;prev.onclick=function(){VM.setMonth(VM.getMonth()-1);drawMonth()};
+  var next=document.createElement("button");next.type="button";next.className="mnav";next.innerHTML="&#8250;";next.setAttribute("aria-label","Następny miesiąc");next.disabled=VM>=maxM;next.onclick=function(){VM.setMonth(VM.getMonth()+1);drawMonth()};
+  var t=document.createElement("div");t.className="mtitle";var cnt=0;for(var k in FREE)if(k.slice(0,7)===iso(VM).slice(0,7))cnt++;
+  t.innerHTML=VM.toLocaleDateString("pl-PL",{month:"long",year:"numeric"})+'<small>'+(cnt?cnt+" "+(cnt===1?"wolny dzień":cnt<5?"wolne dni":"wolnych dni"):"brak wolnych dni")+'</small>';
+  head.appendChild(prev);head.appendChild(t);head.appendChild(next);c.appendChild(head);
+  var grid=document.createElement("div");grid.className="days";["pn","wt","śr","cz","pt","sb","nd"].forEach(function(w){var x=document.createElement("div");x.className="wd";x.textContent=w;grid.appendChild(x)});
+  var lead=(VM.getDay()+6)%7;for(var i=0;i<lead;i++){var e=document.createElement("div");grid.appendChild(e)}
+  var cur=new Date(VM);while(cur.getMonth()===VM.getMonth()){var k=iso(cur),b=document.createElement("button");b.type="button";b.className="day"+(FREE[k]?"":" off");b.textContent=cur.getDate();
+    if(FREE[k]){b.setAttribute("aria-pressed",picked.indexOf(k)>=0);b.setAttribute("aria-label",cur.toLocaleDateString("pl-PL",{weekday:"long",day:"numeric",month:"long"}));
+      (function(k,b){b.onclick=function(){var i=picked.indexOf(k);if(i>=0)picked.splice(i,1);else if(picked.length<5)picked.push(k);b.setAttribute("aria-pressed",picked.indexOf(k)>=0);updPicked()}})(k,b)}
+    else{b.disabled=true;b.setAttribute("aria-hidden","true")}
+    grid.appendChild(b);cur.setDate(cur.getDate()+1)}
+  c.appendChild(grid);updPicked()}
+function updPicked(){var el=$("#picked");if(!el)return;var s=picked.slice().sort();
+  $("#cnt").textContent=s.length?"Wybrano "+s.length+" z 5":"";
+  el.innerHTML=s.map(function(k){return'<span class="pk">'+new Date(k+"T12:00:00").toLocaleDateString("pl-PL",{weekday:"short",day:"numeric",month:"short"})+'<button type="button" data-k="'+k+'" aria-label="Usuń">×</button></span>'}).join("");
+  el.querySelectorAll("button").forEach(function(b){b.onclick=function(){picked.splice(picked.indexOf(b.dataset.k),1);drawMonth()}})}
+var photos=[];
+function renderPhotos(){var el=$("#photos");el.innerHTML="";photos.forEach(function(p,i){var d=document.createElement("div");d.className="ph"+(p.data?"":" busy");
+    if(p.data){d.innerHTML='<img alt="Zdjęcie '+(i+1)+'" src="data:'+p.type+';base64,'+p.data+'"><button type="button" aria-label="Usuń zdjęcie">×</button>';d.querySelector("button").onclick=function(){photos.splice(i,1);renderPhotos()}}else d.textContent="…";el.appendChild(d)});
+  if(photos.length<5){var a=document.createElement("button");a.type="button";a.className="add";a.innerHTML="<b>+</b>Dodaj zdjęcie";a.onclick=function(){$("#file").click()};el.appendChild(a)}}
+function shrink(file){return new Promise(function(res){var url=URL.createObjectURL(file),img=new Image();img.onload=function(){var M=1600,w=img.naturalWidth,h=img.naturalHeight,s=Math.min(1,M/Math.max(w,h));
+    var c=document.createElement("canvas");c.width=Math.round(w*s);c.height=Math.round(h*s);c.getContext("2d").drawImage(img,0,0,c.width,c.height);URL.revokeObjectURL(url);
+    res({type:"image/jpeg",data:c.toDataURL("image/jpeg",0.82).split(",")[1]})};img.onerror=function(){URL.revokeObjectURL(url);res(null)};img.src=url})}
+$("#file").addEventListener("change",function(e){var files=[].slice.call(e.target.files||[]).slice(0,5-photos.length);e.target.value="";
+  files.forEach(function(file){var slot={type:"",data:""};photos.push(slot);renderPhotos();shrink(file).then(function(r){var i=photos.indexOf(slot);if(i<0)return;if(r){slot.type=r.type;slot.data=r.data}else photos.splice(i,1);renderPhotos()})})});
+renderPhotos();
+$("#f").addEventListener("submit",function(e){e.preventDefault();var err=$("#err");err.hidden=true;
+  var d={ig:$("#ig").value,imie:$("#imie").value,tel:$("#tel").value,email:$("#email").value.trim(),pomysl:$("#pomysl").value,miejsce:$("#miejsce").value,linki:$("#linki").value,styl:styl,rozmiar:rozmiar,zdjecia:photos.filter(function(p){return p.data}).map(function(p){return{type:p.type,data:p.data}}),
+    dni:picked.slice().sort(),elastycznie:$("#elast").checked,zgoda:$("#zgoda").checked,website:$("#website").value,elapsed:Date.now()-t0};
+  var miss=[];if(d.ig.replace(/[@\s]/g,"").length<2)miss.push("Instagram");if(!d.imie.trim())miss.push("imię");if(d.tel.replace(/\D/g,"").length<9)miss.push("telefon (9 cyfr)");
+  if(d.email&&!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(d.email))miss.push("poprawny e-mail (albo zostaw puste)");if(d.pomysl.trim().length<10)miss.push("opis pomysłu");if(!d.zgoda)miss.push("zgodę na kontakt");
+  if(!picked.length&&!d.elastycznie)miss.push("dni, które Ci pasują (albo zaznacz „elastyczny/a”)");
+  if(miss.length){err.textContent="Uzupełnij: "+miss.join(", ")+".";err.hidden=false;return}
+  var btn=$("#send");btn.setAttribute("aria-disabled","true");btn.textContent=photos.length?"Wysyłam zgłoszenie i zdjęcia…":"Wysyłam…";
+  google.script.run.withSuccessHandler(function(r){if(r&&r.ok){$("#f").style.display="none";$("#dn").textContent=d.imie.trim();$("#done").style.display="flex";window.scrollTo(0,0)}
+      else{err.textContent=(r&&r.msg)||"Coś poszło nie tak. Spróbuj ponownie.";err.hidden=false;btn.removeAttribute("aria-disabled");btn.textContent="Wyślij zgłoszenie"}})
+    .withFailureHandler(function(e){err.textContent="Nie udało się wysłać. Spróbuj ponownie albo napisz na Instagramie."+(e&&e.message?" (szczegóły: "+String(e.message).slice(0,160)+")":"");err.hidden=false;btn.removeAttribute("aria-disabled");btn.textContent="Wyślij zgłoszenie"})
+    .submitRequest(d)});
+</script>
+</body>
+</html>
